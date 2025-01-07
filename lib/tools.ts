@@ -3,9 +3,9 @@ import { z } from "zod";
 
 const todoToolSchema = z.object({
   type: z
-    .enum(["add", "mark-done", "update"])
+    .enum(["add", "mark-down", "update"])
     .describe(
-      "Action to perform on the todo list. Add to add a new todo, mark-done to mark a todo as done, and update to change the text a todo item.",
+      "Action to perform on the todo list. Add to add a new todo, mark-down to mark a todo as done, and update to change the text a todo item."
     ),
   content: z.string().describe("Content of the new todo item"),
   id: z.string().optional().describe("ID of the todo item to mark as done"),

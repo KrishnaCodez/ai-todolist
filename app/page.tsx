@@ -1,6 +1,6 @@
 "use client";
 
-import { TodoTool } from "@/ai/tools";
+import { TodoTool } from "@/lib/tools";
 import { useScrollToBottom } from "@/components/use-scroll-to-bottom";
 import { generateId } from "ai";
 import { useChat } from "ai/react";
@@ -18,9 +18,6 @@ export default function Chat() {
     { content: "Buy Milk", done: false, id: generateId() },
   ]);
 
-  const [messagesContainerRef, messagesEndRef] =
-    useScrollToBottom<HTMLDivElement>();
-
   const { messages, input, handleInputChange, handleSubmit, error } = useChat({
     body: { todos },
     onToolCall: ({ toolCall }) => {
@@ -33,18 +30,18 @@ export default function Chat() {
           return newTodo;
         }
 
-        if (type === "mark-done" || type === "update") {
+        if (type === "mark-down" || type === "update") {
           let updatedTodo = todos.find((todo) => todo.id === id);
           if (!updatedTodo) return "No todo found with that id";
           updatedTodo =
-            type === "mark-done"
+            type === "mark-down"
               ? { ...updatedTodo, done: true }
               : {
                   ...updatedTodo,
                   content,
                 };
           setTodos((prevTodos) =>
-            prevTodos.map((todo) => (todo.id === id ? updatedTodo : todo)),
+            prevTodos.map((todo) => (todo.id === id ? updatedTodo : todo))
           );
           return updatedTodo;
         }
@@ -60,10 +57,7 @@ export default function Chat() {
         id="left"
         className="w-1/2 relative border-l border-zinc-200 shadow-sm"
       >
-        <div
-          className="space-y-4 px-8 lg:px-16 py-8 overflow-y-scroll h-full"
-          ref={messagesContainerRef}
-        >
+        <div className="space-y-4 px-8 lg:px-16 py-8 overflow-y-scroll h-full">
           {messages.map((m) => {
             if (m.toolInvocations) {
               const { state: toolState, toolName } = m.toolInvocations[0];
@@ -85,10 +79,7 @@ export default function Chat() {
               </div>
             );
           })}
-          <div
-            ref={messagesEndRef}
-            className="shrink-0 w-full min-h-24 md:min-h-[24px]"
-          />
+          <div className="shrink-0 w-full min-h-24 md:min-h-[24px]" />
         </div>
 
         <form
