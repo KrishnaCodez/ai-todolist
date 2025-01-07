@@ -1,7 +1,6 @@
 "use client";
 
 import { TodoTool } from "@/lib/tools";
-import { useScrollToBottom } from "@/components/use-scroll-to-bottom";
 import { generateId } from "ai";
 import { useChat } from "ai/react";
 import { useState } from "react";
