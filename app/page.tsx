@@ -17,6 +17,7 @@ export default function Chat() {
   const [todos, setTodos] = useState<Todo[]>([
     { content: "Learn how to use the AI SDK", done: false, id: generateId() },
     { content: "Buy Milk", done: false, id: generateId() },
+    { content: "Learn how to use the AI SDK", done: false, id: generateId() },
   ]);
 
   const toggleTask = (id: string) => {
@@ -108,11 +109,11 @@ export default function Chat() {
         </form>
       </div>
 
-      <div id="right" className="w-1/2 bg-zinc-100 dark:bg-zinc-900 px-12 py-8">
-        <h2 className="text-xl font-semibold pb-2 animate-fadeIn">
-          My Todo List
+      <div id="right" className="w-1/2 border-l dark:bg-zinc-900 px-12 py-8">
+        <h2 className="text-xl font-semibold  animate-fadeIn pb-4">
+          Todo List
         </h2>
-        <div className="w-full max-w-md mx-auto p-6 bg-background rounded-lg shadow-lg">
+        <div className="max-h-[calc(100vh-7rem)] overflow-y-auto ">
           <AnimatePresence initial={false}>
             {todos.map((task) => (
               <motion.div
