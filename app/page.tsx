@@ -1,9 +1,11 @@
 "use client";
 
+import { TaskItem } from "@/components/TaskList";
 import { TodoTool } from "@/lib/tools";
 import { generateId } from "ai";
 import { useChat } from "ai/react";
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 type Todo = {
   id: string;
@@ -16,6 +18,18 @@ export default function Chat() {
     { content: "Learn how to use the AI SDK", done: false, id: generateId() },
     { content: "Buy Milk", done: false, id: generateId() },
   ]);
+
+  const toggleTask = (id: string) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, done: !todo.done } : todo
+      )
+    );
+  };
+
+  const removeTask = (id: string) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
 
   const { messages, input, handleInputChange, handleSubmit, error } = useChat({
     body: { todos },
@@ -93,13 +107,33 @@ export default function Chat() {
           />
         </form>
       </div>
+
       <div id="right" className="w-1/2 bg-zinc-100 dark:bg-zinc-900 px-12 py-8">
         <h2 className="text-xl font-semibold pb-2 animate-fadeIn">
           My Todo List
         </h2>
-        {todos.map((todo, index) => (
-          <Todo key={index} todo={todo} />
-        ))}
+        <div className="w-full max-w-md mx-auto p-6 bg-background rounded-lg shadow-lg">
+          <AnimatePresence initial={false}>
+            {todos.map((task) => (
+              <motion.div
+                key={task.id}
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{
+                  opacity: { duration: 0.2 },
+                  height: { duration: 0.4 },
+                }}
+              >
+                <TaskItem
+                  task={task}
+                  onToggle={toggleTask}
+                  onRemove={removeTask}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );
