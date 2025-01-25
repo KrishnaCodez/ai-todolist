@@ -30,7 +30,7 @@ export function TaskItem({ task, onToggle, onRemove }: TaskItemProps) {
       animate={{ scale: 1, opacity: 1 }}
       exit={{ scale: 0.8, opacity: 0 }}
       transition={{ type: "spring", stiffness: 500, damping: 30 }}
-      className=" bg-secondary flex justify-between items-center h-8 md:h-auto px-4 py-2  mb-3  border border-gray-200 animate-fade-in group hover:shadow-md transition duration-200  rounded-md hover:border-transparent dark:text-white dark:shadow-2xl  dark:border-transparent "
+      className="  flex justify-between items-center h-8 md:h-auto px-4 py-2  mb-3  border border-gray-200 animate-fade-in group hover:shadow-md transition duration-200  rounded-md hover:border-transparent dark:text-white dark:shadow-2xl  dark:border-transparent "
     >
       <div className="flex items-center space-x-3">
         <Checkbox

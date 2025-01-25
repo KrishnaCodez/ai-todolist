@@ -6,6 +6,8 @@ import { generateId } from "ai";
 import { useChat } from "ai/react";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { SendHorizontal } from "lucide-react";
+import Image from "next/image";
 
 type Todo = {
   id: string;
@@ -86,9 +88,26 @@ export default function Chat() {
 
             return (
               <div key={m.id} className="whitespace-pre-wrap animate-fadeIn">
-                <div>
-                  <div className="font-bold">{m.role}</div>
-                  <p>{m.content}</p>
+                <div className=" gap-2  flex flex-col">
+                  <div
+                    className={`flex items-center gap-2 p-4 py-2  ${
+                      m.role === "user" && "bg-secondary rounded-md "
+                    }`}
+                  >
+                    <Image
+                      src={
+                        m.role === "assistant"
+                          ? "/assistant-black.png"
+                          : "/avatar.png"
+                      }
+                      className="rounded-full"
+                      alt={`${m.role} icon`}
+                      width={40}
+                      height={40}
+                    />
+                    {/* <div className="font-bold capitalize">{m.role}</div> */}
+                    <p>{m.content}</p>
+                  </div>
                 </div>
               </div>
             );
@@ -106,6 +125,8 @@ export default function Chat() {
             placeholder="Say something..."
             onChange={handleInputChange}
           />
+
+          <SendHorizontal className="absolute right-4 top-1/3  -translate-y-1/2 transform m-2.5 h-5 w-5 text-muted-foreground cursor-pointer" />
         </form>
       </div>
 
